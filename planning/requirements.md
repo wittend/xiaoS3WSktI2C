@@ -31,6 +31,10 @@
 - Notes: level shifting, analog refs, shielding
     * not at present.
 
+## Project Requirements
+- This project must include an appropriate testing harness that allows addition of functional tests as new sensors and features are added.
+- This project must create and maintain a set of documentation that is to be periodically updated to Read The Docs using the Sphinx documentation tool and the Furo style theme.
+
 ## 3. Functional Requirements
 - REQ-001 [MUST]: sample sensors once per second and send data samples from RM3100, MCP9804/8 within that interval.
 - REQ-002 [MUST]:  Use GNSS PPS signal to trigger sample transmission and acquisition cadence.
@@ -124,8 +128,8 @@ Example:
 
 ## Local sources for device pinouts and schematics:
 - docs/xiao-s3-schematic.pdf
-- "../planning/Seeed Wio-SX1262.png"
-- "../planning/Seeed XIAO-ESPS3plus_pinout.png"
+- ![SX1262 LoRa module](../planning/Seeed%20Wio-SX1262.png)
+- ![XIAO ESP32S3 Pinout](../planning/Seeed%20XIAO-ESPS3plus_pinout.png)
 
 ## 13. References
 - data concerning reading RM3100 registers is contained in src/rm3100.h
