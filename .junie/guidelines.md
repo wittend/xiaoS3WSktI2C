@@ -9,6 +9,10 @@ This project uses **PlatformIO** with the **ESP-IDF** framework to develop firmw
   ```bash
   pio run
   ```
+- **Documentation**: To build the HTML documentation:
+  ```bash
+  ./venv/bin/sphinx-build -b html docs/source docs/build/html
+  ```
 - **Upload**: Connect the XIAO ESP32S3 and run:
   ```bash
   pio run --target upload
@@ -69,4 +73,6 @@ This project supports both host-side (native) and on-device (embedded) testing u
   - `src/main.c`: Application entry point (`app_main`) and main task logic.
   - `lib/`: Contains driver implementations for RM3100, MCP9808, SX1262, and GNSS.
   - `platformio.ini`: Project configuration and environments.
+  - `docs/`: Sphinx documentation sources and build outputs.
+- **Configuration Mode**: To enter configuration mode, hold the BOOT button (GPIO 0) during power-up or reset. The device will start a WiFi AP named `XIAO_S3_CONFIG`. Connect and navigate to `http://192.168.4.1` to access the configuration form.
 - **Power Management**: Designed for battery operation (LiPO/LiFePO) with solar charging support.

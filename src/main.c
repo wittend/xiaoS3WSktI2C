@@ -8,8 +8,12 @@
 #include "mcp9808.h"
 #include "sx1262.h"
 #include "gnss.h"
+#include "config_manager.h"
+#include "comm_manager.h"
+#include "config_server.h"
 
 static const char *TAG = "APP";
+static device_config_t g_config;
 
 #define I2C_MASTER_SCL_IO           7       // Seeed XIAO S3 SCL (D5)
 #define I2C_MASTER_SDA_IO           6       // Seeed XIAO S3 SDA (D4)
@@ -62,6 +66,22 @@ void sensor_task(void *pvParameters) {
 
 void app_main(void) {
     ESP_LOGI(TAG, "Starting XIAO ESP32S3 Edge Data Collector...");
+
+    // Initialize NVS and Load Config
+    ESP_ERROR_CHECK(config_init());
+    config_load(&g_config);
+
+    // Initialize Comm (WiFi/Event Loop/GPIO)
+    ESP_ERROR_CHECK(comm_init());
+
+    // Check for Config Mode Trigger
+    if (comm_check_config_mode_trigger()) {
+        ESP_LOGI(TAG, "Entering Configuration Mode...");
+        ESP_ERROR_CHECK(comm_wifi_ap_start());
+        ESP_ERROR_CHECK(config_server_start());
+        // In config mode, we stay here until restart
+        return;
+    }
 
     // Initialize I2C
     ESP_ERROR_CHECK(i2c_master_init());
